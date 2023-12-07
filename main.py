@@ -11,7 +11,7 @@ from pricing import test_pricing_button
 from login import test_login_button
 from startButton import test_google_button
 from emailControl import selenium_test_email
-from demo2 import selenium_test_demo_button
+from demo import selenium_test_demo_button
 
 load_dotenv()
 scheduler = AsyncIOScheduler()
@@ -22,9 +22,22 @@ intents = discord.Intents.default()
 intents.message_content = True 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
+@bot.command(name='test')
+async def test_command(ctx):
+    # Your test code here
+    result = await send_message()
+    await ctx.send(f"Test results: {result}")
+    #Buraya kontrol ekle 
+
+
 def setup_scheduler():
     
-    scheduler.add_job(send_message, 'interval', minutes=1)
+    #scheduler.add_job(send_message, 'cron', hour=13,minute=15)
+    #scheduler.add_job(send_message, 'cron',hour=8,minute=15)
+    #scheduler.add_job(send_message,'cron',hour=18,minute=15)
+    scheduler.add_job(send_message, 'interval', minutes=10)
+  
+    
     print("Scheduler jobs are set.")
 
 async def run_test_site():
@@ -164,7 +177,7 @@ async def send_message():
                 await send_error(channel, email_screenshot_path)
         
         demo_result, demo_screenshot_path = await run_test(selenium_test_demo_button)
-        if "Demo, mic and camera buttons are works well" not in demo_result:
+        if "Demo , mic and camera buttons are works well" not in demo_result:
             await channel.send(demo_result)
             if demo_screenshot_path:
                 all_works = False
@@ -218,7 +231,7 @@ async def sendError():
                 await send_error(channel, email_screenshot_path)
 
         demo_result, demo_screenshot_path = await run_test(selenium_test_demo_button)
-        if "Demo, mic and camera buttons are works well" not in demo_result:
+        if "Demo , mic and camera buttons are works well" not in demo_result:
             await channel.send(demo_result)
             if demo_screenshot_path:  
                 await send_error(channel, demo_screenshot_path)

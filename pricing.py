@@ -30,7 +30,7 @@ def test_pricing_button():
     wait = WebDriverWait(driver, 5)
 
     try:
-        button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[data-event="nav-topmenu-pricing"]')))
+        button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[data-event="nav-topmenu-pricing11"]')))
         button.click()
         print("Pricing button clicked.")
     except Exception as e:
