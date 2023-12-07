@@ -1,0 +1,75 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+
+
+def test_google_button():
+    print("Starting the Google button test...")
+    result = "Google button works well"
+    screenshot_path = None
+
+    chrome_options = Options()
+    chrome_options.add_argument('--ignore-certificate-errors')
+    service = Service(executable_path='/usr/local/bin/chromedriver')
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+
+
+    try:
+        driver.get("https://app.percogo.com")
+        print("Website loaded successfully.")
+    except Exception as e:
+        driver.quit()
+        print(f"Error loading page: {e}")
+        return "Page can't load correctly, Error!!!", None
+
+    wait = WebDriverWait(driver, 10)
+
+    try:
+        button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a.b-blue')))
+        button.click()
+        print("First button clicked.")
+    except Exception as e:
+        screenshot_path = "first_button_screenshot.png"
+        driver.save_screenshot(screenshot_path)
+        driver.quit()
+        print(f"Error clicking First Button: {e}")
+        result = "Cannot click First Button Error!!!"
+        return result, screenshot_path
+
+    try:
+        google_register = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'img[alt="google"]')))
+        google_register.click()
+        print("Google register button clicked.")
+        
+    except Exception as e:
+        screenshot_path = "google_register_screenshot.png"
+        driver.save_screenshot(screenshot_path)
+        driver.quit()
+        print(f"Error clicking Google Register Button: {e}")
+        result = "Cannot click Google Register Button Error!!!"
+        return result, screenshot_path
+
+    try:
+        expected_div_selector = 'div[jsname="f2d3ae"][role="presentation"]'
+        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, expected_div_selector)))
+        print("Google register action appears to have worked.")
+    except Exception as e:
+        screenshot_path = "google_result_screenshot.png"
+        driver.save_screenshot(screenshot_path)
+        driver.quit()
+        print(f"Google Register Button is working but wrong page is opening: {e}")
+        result = "Google Register Button is working but wrong page is opening"
+        return result, screenshot_path
+
+    driver.quit()
+    return result, None
+
+
+if __name__ == "__main__":
+    test_result, screenshot = test_google_button()
+    print(f"Test Result: {test_result}")
+    if screenshot:
+        print(f"Screenshot saved: {screenshot}")
