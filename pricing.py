@@ -11,6 +11,7 @@ def test_pricing_button():
     screenshot_path = None
 
     chrome_options = Options()
+    chrome_options.binary_location = "/usr/local/bin/chrome-linux64/chrome"
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-gpu")  
     chrome_options.add_argument("--no-sandbox") 
@@ -30,7 +31,7 @@ def test_pricing_button():
     wait = WebDriverWait(driver, 5)
 
     try:
-        button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[data-event="nav-topmenu-pricing11"]')))
+        button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[data-event="nav-topmenu-pricing"]')))
         button.click()
         print("Pricing button clicked.")
     except Exception as e:

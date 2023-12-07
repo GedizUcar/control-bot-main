@@ -8,6 +8,7 @@ import asyncio
 
 def start_chrome_with_options():
     chrome_options = Options()
+    chrome_options.binary_location = "/usr/local/bin/chrome-linux64/chrome"
     # Add any Chrome options you need here
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-gpu")  

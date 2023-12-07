@@ -11,6 +11,7 @@ def test_google_button():
     screenshot_path = None
 
     chrome_options = Options()
+    chrome_options.binary_location = "/usr/local/bin/chrome-linux64/chrome"
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-gpu")  
     chrome_options.add_argument("--no-sandbox") 

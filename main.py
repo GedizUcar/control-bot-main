@@ -32,10 +32,10 @@ async def test_command(ctx):
 
 def setup_scheduler():
     
-    #scheduler.add_job(send_message, 'cron', hour=13,minute=15)
-    #scheduler.add_job(send_message, 'cron',hour=8,minute=15)
-    #scheduler.add_job(send_message,'cron',hour=18,minute=15)
-    scheduler.add_job(send_message, 'interval', minutes=10)
+    scheduler.add_job(send_message, 'cron', hour=13,minute=15)
+    scheduler.add_job(send_message, 'cron',hour=8,minute=15)
+    scheduler.add_job(send_message,'cron',hour=18,minute=15)
+    scheduler.add_job(send_message, 'interval', minutes=2)
   
     
     print("Scheduler jobs are set.")
